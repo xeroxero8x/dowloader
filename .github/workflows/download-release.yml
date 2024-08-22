@@ -29,7 +29,7 @@ jobs:
           set -e 
           sudo apt-get update -y && sudo apt-get upgrade -y 
           sudo apt-get install wget curl -y 
-          wget https://sourceforge.net/projects/xiaomi-eu-multiland-miui-roms/files/xiaomi.eu/HyperOS-STABLE-RELEASES/HyperOS1.0/xiaomi.eu_SWEETK6A_OS1.0.6.0.THGMIXM_13.zip/download
+          wget https://sourceforge.net/projects/xiaomi-eu-multilang-miui-roms/files/xiaomi.eu/HyperOS-STABLE-RELEASES/HyperOS1.0/xiaomi.eu_SWEETK6A_OS1.0.6.0.THGMIXM_13.zip/download
 
       - name: Check if Pkgs Exist
         run: |  
