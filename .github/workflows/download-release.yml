@@ -1,24 +1,21 @@
 name: Build and Release AUR Package
 
 on:
-  push:
-    branches: 
-      - main
   workflow_dispatch:
     inputs:
-      aur_name:
-        description: 'Exact name of the AUR package nothing extra'
+      link:
+        description: "Exact name of the AUR package nothing extra"
         required: true
-        default: 'ayugram-desktop'
-    
+        default: " "
+
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
       GITHUB_TOKEN: ${{secrets.GITHUB.TOKEN}}
     permissions:
-      contents: write 
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -29,22 +26,21 @@ jobs:
           set -e 
           sudo apt-get update -y && sudo apt-get upgrade -y 
           sudo apt-get install wget curl -y 
-          wget https://sourceforge.net/projects/xiaomi-eu-multilang-miui-roms/files/xiaomi.eu/HyperOS-STABLE-RELEASES/HyperOS1.0/xiaomi.eu_SWEETK6A_OS1.0.6.0.THGMIXM_13.zip
-          ls -la    
+          wget ${{github.event.inputs.link}}
       - name: Check if Pkgs Exist
-        run: |  
+        run: |
           if ls  *.zip 1> /dev/null 2>&1; then
             echo "CHECK_FILE_IS_OK=true" >> $GITHUB_ENV &&
             echo "Found them"
           else
             echo "PKG directory is empty."
           fi
-                  
+
       - name: Upload to Release
         if: env.CHECK_FILE_IS_OK == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          files: ./*.zip 
-          name: files 
+          files: ./*.zip
+          name: files
           tag_name: ${{github.run_id}}
-          body: test 
+          body: test
